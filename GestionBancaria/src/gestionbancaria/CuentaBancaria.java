@@ -4,21 +4,33 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class CuentaBancaria {
+
+    public static final String ROJO = "\u001B[31m";
+    public static final String VERDE = "\u001B[32m";
+    public static final String AZUL = "\u001B[34m";
+    public static final String RESET = "\u001B[0m";
+    public static final String MORADO = "\u001B[35m";
 // Atributos
 
     private final long numCuenta;
     private final Persona titular;
+    private double saldo;
     private Set<Persona> autorizados = new HashSet<>();
 // Constructor
 
     public CuentaBancaria(long ncuenta, Persona titular) {
         numCuenta = ncuenta;
         this.titular = titular;
+        saldo = 0;
     }
 
 // Getters y Setters
     public long getNumCuenta() {
         return numCuenta;
+    }
+
+    public double getSaldo() {
+        return saldo;
     }
 
     public Persona getTitular() {
@@ -33,6 +45,24 @@ public class CuentaBancaria {
         this.autorizados = autorizados;
     }
 // Metodos
+
+    public String getSaldoFormateado() {
+
+        String saldoActual = "Saldo: " + VERDE + String.format("%.2f", saldo) + "€" + RESET + "\n";
+        return saldoActual;
+    }
+
+    public int ingresar(double cantidad) {
+        if (cantidad > 0 && cantidad < 3000) {
+            saldo += cantidad;
+            return 0;
+
+        } else if (cantidad >= 3000) {
+            saldo += cantidad;
+            return 1;
+        }
+        return -1;
+    }
 
     public boolean autorizar(Persona autorizado) {
         return autorizados.add(autorizado);
