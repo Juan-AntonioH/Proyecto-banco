@@ -27,7 +27,7 @@ public class Persona {
 // Metodos
 
     public boolean igual(Persona person) {
-        if (nif.equals(person)) {
+        if (nif.equalsIgnoreCase(person.getNif())) {
             return true;
         }
         return false;

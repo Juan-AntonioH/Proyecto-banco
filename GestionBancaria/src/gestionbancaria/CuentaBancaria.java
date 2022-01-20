@@ -39,10 +39,6 @@ public class CuentaBancaria {
     }
 
     public String verAutorizados() {
-        String personasAutorizadas = "";
-        for (Persona autorizado : autorizados) {
-            personasAutorizadas += autorizado + " ";
-        }
-        return personasAutorizadas;
+        return "Personas autorizadas: " + autorizados;
     }
 }

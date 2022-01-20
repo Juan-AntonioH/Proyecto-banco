@@ -22,11 +22,10 @@ public class Principal {
         if (cuenta1.autorizar(persona3)) {
             System.out.println(persona3.getNombre() + " ha sido autorizada");
         }
-        if (persona2.igual(persona3.getNif())) {
+        if (persona2.igual(persona3)) {
             System.out.println("persona2 y persona3 tienen el mismo nif");
         }
-        System.out.println("Personas autorizadas en la cuenta:"
-                + cuenta1.verAutorizados());
+        System.out.println(cuenta1.verAutorizados());
     }
 
 }
