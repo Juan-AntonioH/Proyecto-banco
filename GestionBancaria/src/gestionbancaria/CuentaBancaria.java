@@ -1,10 +1,12 @@
 package gestionbancaria;
 
+import java.text.DecimalFormat;
 import java.util.HashSet;
 import java.util.Set;
 
 public class CuentaBancaria {
 
+    public static DecimalFormat formatea = new DecimalFormat("###,###.##");
     public static final String ROJO = "\u001B[31m";
     public static final String VERDE = "\u001B[32m";
     public static final String AZUL = "\u001B[34m";
@@ -48,7 +50,7 @@ public class CuentaBancaria {
 
     public String getSaldoFormateado() {
 
-        String saldoActual = "Saldo: " + VERDE + String.format("%.2f", saldo) + "€" + RESET + "\n";
+        String saldoActual = "Saldo: " + VERDE + formatea.format(saldo) + "€" + RESET + "\n";
         return saldoActual;
     }
 
