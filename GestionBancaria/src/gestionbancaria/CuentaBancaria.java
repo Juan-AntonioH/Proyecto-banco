@@ -54,6 +54,11 @@ public class CuentaBancaria {
         return saldoActual;
     }
 
+    String informacionCuenta() {
+        String pep = "hola";
+        return pep;
+    }
+
     public int ingresar(double cantidad) {
         if (cantidad > 0 && cantidad < 3000) {
             saldo += cantidad;
@@ -64,6 +69,17 @@ public class CuentaBancaria {
             return 1;
         }
         return -1;
+    }
+
+    public double sacar(double cantidad) {
+        if (cantidad > saldo + 50) {
+            return saldo;
+        } else if (saldo - cantidad > (-50) && saldo - cantidad <= (-1)) {
+            saldo -= cantidad;
+        } else {
+            saldo -= cantidad;
+        }
+        return saldo;
     }
 
     public boolean autorizar(Persona autorizado) {
