@@ -54,9 +54,14 @@ public class CuentaBancaria {
         return saldoActual;
     }
 
-    String informacionCuenta() {
-        String pep = "hola";
-        return pep;
+    public String informacionCuenta() {
+        String informacion = "";
+        informacion += "Nº cuenta: " + numCuenta + " - " + titular.getNombre();
+        if (!autorizados.isEmpty()) {
+            informacion += "\nPersonas autorizadas: " + autorizados;
+        }
+        informacion += "\n" + getSaldoFormateado();
+        return informacion;
     }
 
     public int ingresar(double cantidad) {

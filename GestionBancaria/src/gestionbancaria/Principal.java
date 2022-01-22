@@ -1,10 +1,12 @@
 package gestionbancaria;
 
+import java.text.DecimalFormat;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Principal {
 
+    public static DecimalFormat formatea = new DecimalFormat("###,###.##");
     static Scanner sc = new Scanner(System.in);
     public static final String ROJO = "\u001B[31m";
     public static final String VERDE = "\u001B[32m";
@@ -16,6 +18,13 @@ public class Principal {
 
         Persona titular = new Persona("12345678S", "Pepe Luis");
         CuentaBancaria cuenta = new CuentaBancaria(12235443, titular);
+
+        //pruebas
+        Persona persona1 = new Persona("19222333Y", "Ana Sanchez");
+        Persona persona2 = new Persona("22888444D", "Laura Sanchez");
+        cuenta.autorizar(persona1);
+        cuenta.autorizar(persona2);
+        //fin pruebas
         do {
             String respuesta = menu(); //Llamar al menu
             switch (respuesta) {
@@ -55,11 +64,11 @@ public class Principal {
                 double cantidad = Double.parseDouble(sc.nextLine());
                 switch (cuenta.ingresar(cantidad)) {
                     case 1:
-                        System.out.printf("Se ha ingresado: %.2f€\n", cantidad);
+                        System.out.println("Se ha ingresado: " + formatea.format(cantidad) + "€");
                         System.out.println(MORADO + "AVISO: NOTIFICAR A HACIENDA" + RESET);
                         break;
                     case 0:
-                        System.out.printf("Se ha ingresado: %.2f€\n", cantidad);
+                        System.out.println("Se ha ingresado: " + formatea.format(cantidad) + "€");
                         break;
                     default:
                         System.out.println("Debes introducir una cantidad correcta");
@@ -109,6 +118,7 @@ public class Principal {
     }
 
     public static void verInformacion(CuentaBancaria cuenta) {
-        System.out.println("pepe");
+        System.out.println("Aqui tiene la información solicitada");
+        System.out.println(cuenta.informacionCuenta());
     }
 }

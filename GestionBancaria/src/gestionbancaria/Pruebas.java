@@ -14,30 +14,26 @@ public class Pruebas {
 
     public static void main(String[] args) {
         //Pruebas
-        Persona titular1 = new Persona("33444666S", "Juan Sánchez");
-        CuentaBancaria cuenta1 = new CuentaBancaria(12235443, titular1);
+        Persona titular = new Persona("33444666S", "Juan Sánchez");
+        CuentaBancaria cuenta = new CuentaBancaria(12235443, titular);
 
         Persona persona1 = new Persona("19222333Y", "Ana Sanchez");
         Persona persona2 = new Persona("22888444D", "Laura Sanchez");
-        Persona persona3 = new Persona("22888444D", "laura sanchez");
+        Persona persona3 = new Persona("22888444D", "Pamelo Joe");
 
-        if (cuenta1.autorizar(persona1)) {
+        if (cuenta.autorizar(persona1)) {
             System.out.println(persona1.getNombre() + " ha sido autorizada");
         }
-        if (cuenta1.autorizar(persona2)) {
+        if (cuenta.autorizar(persona2)) {
             System.out.println(persona2.getNombre() + " ha sido autorizada");
         }
-        if (cuenta1.autorizar(persona3)) {
-            System.out.println(persona3.getNombre() + " ha sido autorizada");
-        }
         if (persona2.igual(persona3)) {
-            System.out.println("persona2 y persona3 tienen el mismo nif");
+            System.out.println(persona2.getNombre() + " y "
+                    + persona3.getNombre() + " tienen el mismo nif");
+        } else {
+            cuenta.autorizar(persona3);
         }
-        System.out.println("Personas autorizadas en la cuenta:"
-                + cuenta1.verAutorizados());
-//Principal
-        Persona titular = new Persona("12345678S", "Pepe Luis");
-        CuentaBancaria cuenta = new CuentaBancaria(12235443, titular);
+        System.out.println(cuenta.verAutorizados());
         do {
             String respuesta = menu(); //Llamar al menu
             switch (respuesta) {
@@ -131,6 +127,7 @@ public class Pruebas {
     }
 
     public static void verInformacion(CuentaBancaria cuenta) {
-        System.out.println("pepe");
+        System.out.println("Aqui tiene la información solicitada");
+        System.out.println(cuenta.informacionCuenta());
     }
 }
