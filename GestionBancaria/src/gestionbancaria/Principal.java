@@ -19,12 +19,6 @@ public class Principal {
         Persona titular = new Persona("12345678S", "Pepe Luis");
         CuentaBancaria cuenta = new CuentaBancaria(12235443, titular);
 
-        //pruebas
-        Persona persona1 = new Persona("19222333Y", "Ana Sanchez");
-        Persona persona2 = new Persona("22888444D", "Laura Sanchez");
-        cuenta.autorizar(persona1);
-        cuenta.autorizar(persona2);
-        //fin pruebas
         do {
             String respuesta = menu(); //Llamar al menu
             switch (respuesta) {
@@ -36,6 +30,12 @@ public class Principal {
                     break;
                 case "3": //INFORMACIÓN CUENTA
                     verInformacion(cuenta);
+                    break;
+                case "4": // DOMILICIAR RECIBO
+                    domiciliarRecibo(cuenta);
+                    break;
+                case "5": // MOSTRAR RECIBOS POR PERIOCIDAD
+                    recibosPorPeriocidad(cuenta);
                     break;
                 case "0":
                     System.out.println("Gracias por usar nuestra aplicación");
@@ -52,6 +52,8 @@ public class Principal {
         System.out.println("1-Ingresar dinero.");
         System.out.println("2-Sacar dinero.");
         System.out.println("3-Informacion cuenta.");
+        System.out.println("4-Domiliciar recibo.");
+        System.out.println("5-Listar recibos según periodicidad");
         System.out.println("0-Salir\n");
         respuesta = sc.nextLine();
         return respuesta;
@@ -93,7 +95,6 @@ public class Principal {
                 double cantidad = Double.parseDouble(sc.nextLine());
                 double saldo = cuenta.getSaldo();
                 double dinero = cuenta.sacar(cantidad);
-                System.out.println(dinero);
                 if (cantidad <= 0) {
                     System.out.println("Has introducido una cantidad incorrecta");
                 } else if (dinero == saldo) {
@@ -120,5 +121,36 @@ public class Principal {
     public static void verInformacion(CuentaBancaria cuenta) {
         System.out.println("Aqui tiene la información solicitada");
         System.out.println(cuenta.informacionCuenta());
+    }
+
+    private static void domiciliarRecibo(CuentaBancaria cuenta) {
+        System.out.println("Indica el cif del recibo");
+        String cif = sc.nextLine();
+        System.out.println("Indica el nombre de la empresa");
+        String nombreEmpresa = sc.nextLine();
+        System.out.println("¿Cual es el importe del recibo?");
+        double importe = Double.parseDouble(sc.nextLine());
+        System.out.println("¿Cual es el motivo de pagar tanto?");
+        String concepto = sc.nextLine();
+        System.out.println("¿Cual es la periocidad del recibo? 'mensual, trimestral o anual' ");
+        String periocidad = sc.nextLine();
+        System.out.println("El recibo fue creado\n"
+                + cuenta.domiciliar(cif, nombreEmpresa, importe, concepto, periocidad));
+    }
+
+    private static void recibosPorPeriocidad(CuentaBancaria cuenta) {
+//        boolean correcto = true;
+        String periodicidad;
+//        do {
+            System.out.println("¿Indica la periocidad de los recibos que quieres recibir información"
+                    + " 'mensual, trimestral, anual.");
+            periodicidad = sc.nextLine();
+//            if ((periodicidad == "mensual" || periodicidad== "trimestral"
+//                    || periodicidad=="anual")) {
+                System.out.println(cuenta.listadoRecibosDomiciliados(periodicidad));
+//                correcto = false;
+//            }
+//        } while (correcto);
+
     }
 }

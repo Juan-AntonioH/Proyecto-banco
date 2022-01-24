@@ -1,7 +1,9 @@
 package gestionbancaria;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class CuentaBancaria {
@@ -18,6 +20,7 @@ public class CuentaBancaria {
     private final Persona titular;
     private double saldo;
     private Set<Persona> autorizados = new HashSet<>();
+    private List<Recibo> recibos = new ArrayList<>();
 // Constructor
 
     public CuentaBancaria(long ncuenta, Persona titular) {
@@ -86,7 +89,19 @@ public class CuentaBancaria {
         }
         return saldo;
     }
+    public Recibo domiciliar(String cif,String nombreEmpresa, double importe, String concepto, String periocidad){
+         
+        Recibo recibo = new Recibo(cif,nombreEmpresa,importe,concepto,periocidad);
+        recibos.add(recibo);
+        return recibo;
+        
+    }
+    public Set<Recibo> listadoRecibosDomiciliados(String periodicidad){
+        Set<Recibo> lista = new HashSet<>();
+   
 
+        return lista;
+    }
     public boolean autorizar(Persona autorizado) {
         return autorizados.add(autorizado);
     }
