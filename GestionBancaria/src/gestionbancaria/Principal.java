@@ -124,33 +124,39 @@ public class Principal {
     }
 
     private static void domiciliarRecibo(CuentaBancaria cuenta) {
+        double importe = 0;
         System.out.println("Indica el cif del recibo");
         String cif = sc.nextLine();
         System.out.println("Indica el nombre de la empresa");
         String nombreEmpresa = sc.nextLine();
-        System.out.println("¿Cual es el importe del recibo?");
-        double importe = Double.parseDouble(sc.nextLine());
+        for (int i = 0; i < 1;) {
+            i = 1;
+            try {
+                System.out.println("¿Cual es el importe del recibo?");
+                importe = Double.parseDouble(sc.nextLine());
+            } catch (InputMismatchException e) {
+                System.out.println("Has introducido un caracter");
+                sc = new Scanner(System.in);
+                i = 0;
+            } catch (Exception e) {
+                System.out.println("Ocurrio un error inesperado");
+                sc = new Scanner(System.in);
+                i = 0;
+            }
+        }
         System.out.println("¿Cual es el motivo de pagar tanto?");
         String concepto = sc.nextLine();
         System.out.println("¿Cual es la periocidad del recibo? 'mensual, trimestral o anual' ");
         String periocidad = sc.nextLine();
-        System.out.println("El recibo fue creado\n"
-                + cuenta.domiciliar(cif, nombreEmpresa, importe, concepto, periocidad));
+        System.out.println(cuenta.domiciliar(cif, nombreEmpresa, importe, concepto, periocidad));
     }
 
     private static void recibosPorPeriocidad(CuentaBancaria cuenta) {
-//        boolean correcto = true;
         String periodicidad;
-//        do {
-            System.out.println("¿Indica la periocidad de los recibos que quieres recibir información"
-                    + " 'mensual, trimestral, anual.");
-            periodicidad = sc.nextLine();
-//            if ((periodicidad == "mensual" || periodicidad== "trimestral"
-//                    || periodicidad=="anual")) {
-                System.out.println(cuenta.listadoRecibosDomiciliados(periodicidad));
-//                correcto = false;
-//            }
-//        } while (correcto);
+        System.out.println("¿Indica la periocidad de los recibos que quieres recibir información"
+                + " 'mensual, trimestral, anual.");
+        periodicidad = sc.nextLine();
+        System.out.println("Los recibos " + periodicidad + "es son:\n" + cuenta.listadoRecibosDomiciliados(periodicidad));
 
     }
 }

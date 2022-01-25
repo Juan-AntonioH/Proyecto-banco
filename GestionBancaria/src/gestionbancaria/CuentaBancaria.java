@@ -89,19 +89,50 @@ public class CuentaBancaria {
         }
         return saldo;
     }
-    public Recibo domiciliar(String cif,String nombreEmpresa, double importe, String concepto, String periocidad){
-         
-        Recibo recibo = new Recibo(cif,nombreEmpresa,importe,concepto,periocidad);
-        recibos.add(recibo);
-        return recibo;
-        
-    }
-    public Set<Recibo> listadoRecibosDomiciliados(String periodicidad){
-        Set<Recibo> lista = new HashSet<>();
-   
 
+    public String domiciliar(String cif, String nombreEmpresa, double importe, String concepto, String periocidad) {
+        boolean comprobante = true;
+        String informacion = "No se pudo crear el recibo por los siguientes motivos:";
+        if (cif.isBlank()) {
+            informacion += "\nEl campo cif no tiene contenido.";
+            comprobante = false;
+        }
+        if (nombreEmpresa.isBlank()) {
+            informacion += "\nEl campo nombreEmpresa no tiene contenido.";
+            comprobante = false;
+        }
+        if (importe == 0) {
+            informacion += "\nNo has introducido ningún importe.";
+            comprobante = false;
+        }
+        if (concepto.isBlank()) {
+            informacion += "\nEl concepto esta vacio.";
+            comprobante = false;
+        }
+        if (!(periocidad.equals("mensual") || periocidad.equals("trimestral")
+                || periocidad.equals("anual"))) {
+            informacion += "\nNo has introducido una periocidad correcta";
+            comprobante = false;
+        }
+        if (comprobante) {
+            Recibo recibo = new Recibo(cif, nombreEmpresa, importe, concepto, periocidad);
+            recibos.add(recibo);
+            informacion = "\nEl recibo fue creado correctamente:\n" + recibo.toString();
+        }
+        return informacion;
+
+    }
+
+    public Set<Recibo> listadoRecibosDomiciliados(String periodicidad) {
+        Set<Recibo> lista = new HashSet<>();
+        for (Recibo recibo : recibos) {
+            if (recibo.getPeriodicidad().equalsIgnoreCase(periodicidad)) {
+                lista.add(recibo);
+            }
+        }
         return lista;
     }
+
     public boolean autorizar(Persona autorizado) {
         return autorizados.add(autorizado);
     }

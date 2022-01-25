@@ -1,6 +1,7 @@
 package gestionbancaria;
 
 public class Recibo {
+
     // Atributos
     private String cif;
     private String nombreEmpresa;
@@ -53,12 +54,12 @@ public class Recibo {
     public String getPeriodicidad() {
         return periodicidad;
     }
-    public boolean igual(Recibo recibo) {
-        if (periodicidad.equalsIgnoreCase(recibo.getPeriodicidad())) {
-            return true;
-        }
-        return false;
-    }
+//    public boolean igual(Recibo recibo) {
+//        if (periodicidad.equalsIgnoreCase(recibo.getPeriodicidad())) {
+//            return true;
+//        }
+//        return false;
+//    }
 //    public boolean setPeriodicidad(String periodicidad) {
 //        boolean comprobar = false;
 //        if (periodicidad.equals("mensual") || periodicidad.equals("trimestral")
