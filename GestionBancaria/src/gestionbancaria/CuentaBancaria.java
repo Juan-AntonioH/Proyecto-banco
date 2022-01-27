@@ -7,35 +7,30 @@ import java.util.List;
 import java.util.Set;
 
 public class CuentaBancaria {
-
-    public static DecimalFormat formatea = new DecimalFormat("###,###.##");
-    public static final String ROJO = "\u001B[31m";
-    public static final String VERDE = "\u001B[32m";
-    public static final String AZUL = "\u001B[34m";
-    public static final String RESET = "\u001B[0m";
-    public static final String MORADO = "\u001B[35m";
-// Atributos
-
+    static DecimalFormat formatea = new DecimalFormat("###,###.##");
     private final long numCuenta;
     private final Persona titular;
-    private double saldo;
     private Set<Persona> autorizados = new HashSet<>();
-    private List<Recibo> recibos = new ArrayList<>();
-// Constructor
+    private double saldo = 0;
+    private Recibos domicilio;
+     private List<Recibos> recibos = new ArrayList<>();
+
+    public Recibos getDomicilio() {
+        return domicilio;
+    }
+
+    public void setDomicilio(Recibos domicilio) {
+        this.domicilio = domicilio;
+    }
+    
 
     public CuentaBancaria(long ncuenta, Persona titular) {
         numCuenta = ncuenta;
         this.titular = titular;
-        saldo = 0;
     }
 
-// Getters y Setters
     public long getNumCuenta() {
         return numCuenta;
-    }
-
-    public double getSaldo() {
-        return saldo;
     }
 
     public Persona getTitular() {
@@ -46,67 +41,97 @@ public class CuentaBancaria {
         return autorizados;
     }
 
-    public void setAutorizados(Set<Persona> autorizados) {
-        this.autorizados = autorizados;
+    public double getSaldo() {
+        return saldo;
     }
-// Metodos
+
 
     public String getSaldoFormateado() {
-
-        String saldoActual = "Saldo: " + VERDE + formatea.format(saldo) + "€" + RESET + "\n";
-        return saldoActual;
-    }
-
-    public String informacionCuenta() {
-        String informacion = "";
-        informacion += "Nº cuenta: " + numCuenta + " - " + titular.getNombre();
-        if (!autorizados.isEmpty()) {
-            informacion += "\nPersonas autorizadas: " + autorizados;
-        }
-        informacion += "\n" + getSaldoFormateado();
-        return informacion;
+        String formatoSaldo;
+        formatoSaldo = formatea.format(saldo) + " €";
+        return formatoSaldo;
     }
 
     public int ingresar(double cantidad) {
+        int maximo = 3000;
+        int mensaje = -1;
         if (cantidad > 0 && cantidad < 3000) {
             saldo += cantidad;
-            return 0;
-
-        } else if (cantidad >= 3000) {
+            return mensaje = 0;
+        }
+        if (cantidad >= maximo) {
             saldo += cantidad;
-            return 1;
+            return mensaje = 1;
         }
-        return -1;
+        return mensaje;
     }
 
-    public double sacar(double cantidad) {
-        if (cantidad > saldo + 50) {
-            return saldo;
-        } else if (saldo - cantidad > (-50) && saldo - cantidad <= (-1)) {
-            saldo -= cantidad;
-        } else {
-            saldo -= cantidad;
-        }
-        return saldo;
+    public void setAutorizados(Set<Persona> autorizados) {
+        this.autorizados = autorizados;
     }
-    public Recibo domiciliar(String cif,String nombreEmpresa, double importe, String concepto, String periocidad){
-         
-        Recibo recibo = new Recibo(cif,nombreEmpresa,importe,concepto,periocidad);
-        recibos.add(recibo);
-        return recibo;
-        
-    }
-    public Set<Recibo> listadoRecibosDomiciliados(String periodicidad){
-        Set<Recibo> lista = new HashSet<>();
-   
 
-        return lista;
-    }
     public boolean autorizar(Persona autorizado) {
         return autorizados.add(autorizado);
     }
 
     public String verAutorizados() {
-        return "Personas autorizadas: " + autorizados;
+        String personasAutorizadas = "";
+        for (Persona autorizado : autorizados) {
+            personasAutorizadas += autorizado + " ";
+        }
+        return personasAutorizadas;
+    }
+    public double sacar(double cantidad){
+        String fraseInc;
+        if(cantidad>0){
+            saldo-=cantidad;
+        }
+        return saldo;
+    }
+    public String informacionCuenta(){
+        String informacion="";
+        informacion+= "Nº cuenta: "+numCuenta+" - "+titular.getNombre();
+        if(!autorizados.isEmpty()){
+            informacion+= "\nPersonas autorizadas: "+autorizados;
+        }
+        informacion+= "\n Saldo: " +getSaldoFormateado();
+        return informacion;
+    }
+    public String domiciliar(String cif, String nombreEmpresa, double importe, String concepto, String periodicidad ){
+        String respuestaNegativa = "No se ha domiciliado por: ";
+        String respuestaPositiva = "Domiciliado correctamente.";
+        if(cif.isEmpty()){
+            return respuestaNegativa+"el cif.";
+        }
+        if(nombreEmpresa.isEmpty()){
+            return respuestaNegativa+ "el nombre de la empresa.";
+        }
+        if(importe==0){
+            return respuestaNegativa+ "el importe.";
+        }
+        if(concepto.isEmpty()){
+            return respuestaNegativa+ "el concepto.";
+        }
+        if(periodicidad.equals("mensual")||periodicidad.equals("trimestral")|| periodicidad.equals("anual")){
+            return respuestaPositiva;
+        }
+        if(periodicidad!=("mensual")||periodicidad!=("trimestral")|| periodicidad!=("anual")){
+            return respuestaNegativa+"por la periodicidad.";
+        }
+        else{
+            
+            return respuestaPositiva;
+        }
+    }
+    
+    
+    public Set<Recibos> listadoRecibosDomiciliados(String periodicidad) {
+        Set<Recibos> lista = new HashSet<>();
+        for (Recibos recibo : recibos) {
+            if (recibo.getPeriodicidad().equalsIgnoreCase(periodicidad)) {
+                lista.add(recibo);
+            }
+        }
+        return lista;
     }
 }
