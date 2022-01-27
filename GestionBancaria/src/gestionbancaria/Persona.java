@@ -16,11 +16,11 @@ public class Persona {
     public String getNif() {
         return nif;
     }
-    
+
     public String getNombre() {
         return nombre;
     }
-    
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -32,14 +32,14 @@ public class Persona {
         }
         return false;
     }
-    
+
     public boolean igual(String person) {
         if (nif.equalsIgnoreCase(person)) {
             return true;
         }
         return false;
     }
-    
+
     @Override  //REDEFINE EL MÉTODO
     public String toString() {
         return nombre + " (" + nif + ")";

@@ -13,37 +13,65 @@ public class Principal {
     public static final String AZUL = "\u001B[34m";
     public static final String RESET = "\u001B[0m";
     public static final String MORADO = "\u001B[35m";
+    public static final String CYAN = "\u001B[36m";
 
     public static void main(String[] args) {
-
-        Persona titular = new Persona("12345678S", "Pepe Luis");
-        CuentaBancaria cuenta = new CuentaBancaria(12235443, titular);
-
+        Banco cuentaPersonal = new Banco();
+        CuentaBancaria cuenta;
         do {
-            String respuesta = menu(); //Llamar al menu
-            switch (respuesta) {
-                case "1": //INGRESAR DINERO
-                    menuIngresar(cuenta);
-                    break;
-                case "2": //SACAR DINERO
-                    menuSacar(cuenta);
-                    break;
-                case "3": //INFORMACIÓN CUENTA
-                    verInformacion(cuenta);
-                    break;
-                case "4": // DOMILICIAR RECIBO
-                    domiciliarRecibo(cuenta);
-                    break;
-                case "5": // MOSTRAR RECIBOS POR PERIOCIDAD
-                    recibosPorPeriocidad(cuenta);
-                    break;
+            String peticion = menuBanco(); //Entrar al menu principal
+            switch (peticion) {
+                case "1": //Solicitar cuenta a la que acceder
+                    cuenta = localizaCC(cuentaPersonal);
+                    if (cuenta == null) {
+                        System.out.println(ROJO + "Has introducido un numero de cuenta erroneo.\n" + RESET);
+                        break;
+                    }
+                    System.out.println("\nHas podido conectar a tu cuenta: " + cuenta + " correctamente.");
+                    do {
+                        String respuesta = menu(); //Llamar al menu de la aplicacion
+                        switch (respuesta) {
+                            case "1": //INGRESAR DINERO
+                                menuIngresar(cuenta);
+                                break;
+                            case "2": //SACAR DINERO
+                                menuSacar(cuenta);
+                                break;
+                            case "3": //INFORMACIÓN CUENTA
+                                verInformacion(cuenta);
+                                break;
+                            case "4": // DOMILICIAR RECIBO
+                                domiciliarRecibo(cuenta);
+                                break;
+                            case "5": // MOSTRAR RECIBOS POR PERIOCIDAD
+                                recibosPorPeriocidad(cuenta);
+                                break;
+                            case "0":
+                                System.out.println("Gracias por usar nuestra aplicación");
+                                return;  //SALIR DEL BUCLE
+                            default:
+                                System.out.println("Debe seleccionar un numero correcto");
+                        }
+                    } while (true);
                 case "0":
-                    System.out.println("Gracias por usar nuestra aplicación");
+                    System.out.println("Gracias por usar ING Mislata");
                     return;  //SALIR DEL BUCLE
                 default:
                     System.out.println("Debe seleccionar un numero correcto");
             }
         } while (true);
+
+//        Persona titular = new Persona("12345678S", "Pepe Luis");
+//        CuentaBancaria cuenta = new CuentaBancaria(12235443, titular);
+    }
+
+    public static String menuBanco() { // Muestra las opciones por pantalla
+        String respuesta;
+        System.out.println(CYAN + "Bienvenido a ING Mislata" + RESET);
+        System.out.println("1-Indicar el número de cuenta con el que deseas operar.");
+        System.out.println("0-Salir\n");
+        respuesta = sc.nextLine();
+        return respuesta;
     }
 
     public static String menu() { // Muestra las opciones por pantalla
@@ -123,7 +151,7 @@ public class Principal {
         System.out.println(cuenta.informacionCuenta());
     }
 
-    private static void domiciliarRecibo(CuentaBancaria cuenta) {
+    public static void domiciliarRecibo(CuentaBancaria cuenta) {
         double importe = 0;
         System.out.println("Indica el cif del recibo");
         String cif = sc.nextLine();
@@ -151,12 +179,32 @@ public class Principal {
         System.out.println(cuenta.domiciliar(cif, nombreEmpresa, importe, concepto, periocidad));
     }
 
-    private static void recibosPorPeriocidad(CuentaBancaria cuenta) {
+    public static void recibosPorPeriocidad(CuentaBancaria cuenta) {
         String periodicidad;
         System.out.println("¿Indica la periocidad de los recibos que quieres recibir información"
                 + " 'mensual, trimestral, anual.");
         periodicidad = sc.nextLine();
         System.out.println("Los recibos " + periodicidad + "es son:\n" + cuenta.listadoRecibosDomiciliados(periodicidad));
+
+    }
+
+    public static CuentaBancaria localizaCC(Banco cuenta) {
+        do {
+            try {
+                System.out.println("Indique el número de cuenta con el que deseas operar.\n");
+                long numero = Long.parseLong(sc.nextLine());
+                CuentaBancaria numeroCuenta = cuenta.localicarCC(numero);
+                return numeroCuenta;
+            } catch (InputMismatchException e) {
+                System.out.println("Has introducido un caracter");
+                sc = new Scanner(System.in);
+            } catch (Exception e) {
+                System.out.println("Se ha producido un error inesperado.");
+                sc = new Scanner(System.in);
+                break;
+            }
+        } while (true);
+        return null;
 
     }
 }

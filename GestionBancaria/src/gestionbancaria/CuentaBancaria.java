@@ -27,6 +27,7 @@ public class CuentaBancaria {
         numCuenta = ncuenta;
         this.titular = titular;
         saldo = 0;
+
     }
 
 // Getters y Setters
@@ -140,4 +141,10 @@ public class CuentaBancaria {
     public String verAutorizados() {
         return "Personas autorizadas: " + autorizados;
     }
+
+    @Override
+    public String toString() {
+        return "{numCuenta=" + numCuenta + ", titular=" + titular + '}';
+    }
+
 }
