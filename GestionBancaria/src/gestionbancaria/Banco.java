@@ -53,6 +53,7 @@ public class Banco {
         cuentas.put(cuenta3.getNumCuenta(), cuenta3);
         // domiciliar
         cuenta1.domiciliar("123-ABC", "Ladrones", 350, "Todo lo tuyo me pertenece", "mensual");
+        cuenta1.domiciliar("123-ABCD", "Ladrones 2.0", 450, "Todo lo tuyo me pertenece", "mensual");
         cuenta1.domiciliar("123-DDA", "Ladrones 2.0", 1500, "Todo lo tuyo me pertenece en mayor medida", "trimestral");
         cuenta2.domiciliar("456-XPI", "Hª Navarro", 120, "Coste de la obra", "mensual");
         cuenta3.domiciliar("789-QWE", "COFIDIS", 3520, "Comisiones", "anual");
@@ -64,5 +65,5 @@ public class Banco {
         } else {
             return null;
         }
-    }  
+    }
 }

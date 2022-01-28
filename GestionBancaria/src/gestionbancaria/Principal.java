@@ -17,8 +17,10 @@ public class Principal {
 
     public static void main(String[] args) {
         Banco cuentaPersonal = new Banco();
+        boolean comprobante;
         CuentaBancaria cuenta;
         do {
+            comprobante = true;
             String peticion = menuBanco(); //Entrar al menu principal
             switch (peticion) {
                 case "1": //Solicitar cuenta a la que acceder
@@ -27,7 +29,7 @@ public class Principal {
                         System.out.println(ROJO + "Has introducido un numero de cuenta erroneo.\n" + RESET);
                         break;
                     }
-                    System.out.println("\nHas podido conectar a tu cuenta: " + cuenta + " correctamente.");
+                    System.out.println("\nHas podido conectar correctamente a tu cuenta: " + cuenta + ".");
                     do {
                         String respuesta = menu(); //Llamar al menu de la aplicacion
                         switch (respuesta) {
@@ -48,21 +50,25 @@ public class Principal {
                                 break;
                             case "0":
                                 System.out.println("Gracias por usar nuestra aplicación");
-                                return;  //SALIR DEL BUCLE
+                                comprobante = false;
+                                break;  //SALIR DEL BUCLE
                             default:
                                 System.out.println("Debe seleccionar un numero correcto");
                         }
-                    } while (true);
+                    } while (comprobante);
                 case "0":
-                    System.out.println("Gracias por usar ING Mislata");
-                    return;  //SALIR DEL BUCLE
+                    if (peticion.equalsIgnoreCase("1")) {
+                        comprobante = true;
+                        break;
+                    } else {
+                        System.out.println("Gracias por usar ING Mislata");
+                        return;  //SALIR DEL BUCLE 
+                    }
+
                 default:
                     System.out.println("Debe seleccionar un numero correcto");
             }
-        } while (true);
-
-//        Persona titular = new Persona("12345678S", "Pepe Luis");
-//        CuentaBancaria cuenta = new CuentaBancaria(12235443, titular);
+        } while (comprobante);
     }
 
     public static String menuBanco() { // Muestra las opciones por pantalla
@@ -184,8 +190,11 @@ public class Principal {
         System.out.println("¿Indica la periocidad de los recibos que quieres recibir información"
                 + " 'mensual, trimestral, anual.");
         periodicidad = sc.nextLine();
-        System.out.println("Los recibos " + periodicidad + "es son:\n" + cuenta.listadoRecibosDomiciliados(periodicidad));
-
+        if (!cuenta.listadoRecibosDomiciliados(periodicidad).isEmpty()) {
+            System.out.println("Los recibos " + periodicidad + "es son:\n" + cuenta.listadoRecibosDomiciliados(periodicidad));
+        } else if (cuenta.listadoRecibosDomiciliados(periodicidad).isEmpty()) {
+            System.out.println("No tienes recibos con esa periodicidad");
+        }
     }
 
     public static CuentaBancaria localizaCC(Banco cuenta) {

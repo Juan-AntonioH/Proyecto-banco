@@ -144,7 +144,7 @@ public class CuentaBancaria {
 
     @Override
     public String toString() {
-        return "{numCuenta=" + numCuenta + ", titular=" + titular + '}';
+        return "{numero de cuenta:" + numCuenta + ", titular:" + titular.getNombre() + '}';
     }
 
 }
