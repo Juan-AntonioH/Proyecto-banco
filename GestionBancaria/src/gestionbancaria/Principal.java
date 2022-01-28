@@ -50,14 +50,14 @@ public class Principal {
                                 break;
                             case "0":
                                 System.out.println("Gracias por usar nuestra aplicación");
-                                comprobante = false;
-                                break;  //SALIR DEL BUCLE
+                                comprobante = false; //SALIR DEL BUCLE
+                                break;
                             default:
                                 System.out.println("Debe seleccionar un numero correcto");
                         }
                     } while (comprobante);
-                case "0":
-                    if (peticion.equalsIgnoreCase("1")) {
+                case "0": //Condición para continuar bucle principal en caso de más opciones
+                    if (!peticion.equalsIgnoreCase("0")) {
                         comprobante = true;
                         break;
                     } else {
@@ -83,12 +83,14 @@ public class Principal {
     public static String menu() { // Muestra las opciones por pantalla
         String respuesta;
         System.out.println(AZUL + "GESTION DE CUENTA BANCARIA" + RESET);
-        System.out.println("1-Ingresar dinero.");
-        System.out.println("2-Sacar dinero.");
-        System.out.println("3-Informacion cuenta.");
-        System.out.println("4-Domiliciar recibo.");
-        System.out.println("5-Listar recibos según periodicidad");
-        System.out.println("0-Salir\n");
+        System.out.println(VERDE +"-------------------------------------|"+RESET);
+        System.out.println("1-Ingresar dinero.                   "+VERDE+"|"+RESET);
+        System.out.println("2-Sacar dinero.                      "+VERDE+"|"+RESET);
+        System.out.println("3-Informacion cuenta.                "+VERDE+"|"+RESET);
+        System.out.println("4-Domiliciar recibo.                 "+VERDE+"|"+RESET);;
+        System.out.println("5-Listar recibos según periodicidad  "+VERDE+"|"+RESET);
+        System.out.println("0-Salir                              "+VERDE+"|"+RESET);
+        System.out.println(VERDE +"-------------------------------------|"+RESET);
         respuesta = sc.nextLine();
         return respuesta;
     }

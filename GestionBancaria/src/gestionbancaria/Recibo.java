@@ -2,6 +2,12 @@ package gestionbancaria;
 
 public class Recibo {
 
+    public static final String ROJO = "\u001B[31m";
+    public static final String VERDE = "\u001B[32m";
+    public static final String AZUL = "\u001B[34m";
+    public static final String RESET = "\u001B[0m";
+    public static final String MORADO = "\u001B[35m";
+    public static final String CYAN = "\u001B[36m";
     // Atributos
     private String cif;
     private String nombreEmpresa;
@@ -72,7 +78,11 @@ public class Recibo {
 
     @Override
     public String toString() {
-        return "Recibo{" + "cif=" + cif + ", nombreEmpresa=" + nombreEmpresa + ", importe=" + importe + ", concepto=" + concepto + ", periodicidad=" + periodicidad + '}';
+        return "Recibo{" + "cif=" + MORADO + cif + RESET + ", nombreEmpresa="
+                + MORADO + nombreEmpresa + RESET + ", importe="
+                + MORADO + importe + RESET + ", concepto="
+                + MORADO + concepto + RESET + ", periodicidad="
+                + MORADO + periodicidad + RESET + '}' + "\n";
     }
 
 }
