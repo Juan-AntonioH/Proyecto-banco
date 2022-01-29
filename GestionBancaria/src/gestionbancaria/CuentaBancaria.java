@@ -60,9 +60,9 @@ public class CuentaBancaria {
 
     public String informacionCuenta() {
         String informacion = "";
-        informacion += "Nº cuenta: " + numCuenta + " - " + titular.getNombre();
+        informacion += ROJO + "Nº cuenta: " + AZUL + numCuenta + RESET + " - " + AZUL + titular.getNombre() + RESET;
         if (!autorizados.isEmpty()) {
-            informacion += "\nPersonas autorizadas: " + autorizados;
+            informacion += MORADO + "\nPersonas autorizadas: " + RESET + autorizados;
         }
         informacion += "\n" + getSaldoFormateado();
         return informacion;
@@ -144,7 +144,7 @@ public class CuentaBancaria {
 
     @Override
     public String toString() {
-        return "{numero de cuenta:" + numCuenta + ", titular:" + titular.getNombre() + '}';
+        return MORADO + "Nº de cuenta:" + ROJO + numCuenta + AZUL + " - " + MORADO + "titular:" + ROJO + titular.getNombre() + RESET;
     }
 
 }

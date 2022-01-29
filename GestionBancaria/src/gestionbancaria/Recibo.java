@@ -82,7 +82,7 @@ public class Recibo {
                 + MORADO + nombreEmpresa + RESET + ", importe="
                 + MORADO + importe + RESET + ", concepto="
                 + MORADO + concepto + RESET + ", periodicidad="
-                + MORADO + periodicidad + RESET + '}' + "\n";
+                + MORADO + periodicidad + RESET + '}';
     }
 
 }

@@ -31,7 +31,7 @@ public class Principal {
                     }
                     System.out.println("\nHas podido conectar correctamente a tu cuenta: " + cuenta + ".");
                     do {
-                        String respuesta = menu(); //Llamar al menu de la aplicacion
+                        String respuesta = menu(cuenta); //Llamar al menu de la aplicacion
                         switch (respuesta) {
                             case "1": //INGRESAR DINERO
                                 menuIngresar(cuenta);
@@ -74,23 +74,25 @@ public class Principal {
     public static String menuBanco() { // Muestra las opciones por pantalla
         String respuesta;
         System.out.println(CYAN + "Bienvenido a ING Mislata" + RESET);
-        System.out.println("1-Indicar el número de cuenta con el que deseas operar.");
+        System.out.println("1-Elegir cuenta con la que desees operar");
         System.out.println("0-Salir\n");
         respuesta = sc.nextLine();
         return respuesta;
     }
 
-    public static String menu() { // Muestra las opciones por pantalla
+    public static String menu(CuentaBancaria cuenta) { // Muestra las opciones por pantalla
         String respuesta;
         System.out.println(AZUL + "GESTION DE CUENTA BANCARIA" + RESET);
-        System.out.println(VERDE +"-------------------------------------|"+RESET);
-        System.out.println("1-Ingresar dinero.                   "+VERDE+"|"+RESET);
-        System.out.println("2-Sacar dinero.                      "+VERDE+"|"+RESET);
-        System.out.println("3-Informacion cuenta.                "+VERDE+"|"+RESET);
-        System.out.println("4-Domiliciar recibo.                 "+VERDE+"|"+RESET);;
-        System.out.println("5-Listar recibos según periodicidad  "+VERDE+"|"+RESET);
-        System.out.println("0-Salir                              "+VERDE+"|"+RESET);
-        System.out.println(VERDE +"-------------------------------------|"+RESET);
+        System.out.println(VERDE + "-------------------------------------|" + RESET);
+        System.out.println(MORADO + "Cuenta actual: " + "Nº " + ROJO + cuenta.getNumCuenta() + AZUL + " - " + MORADO + "Titular: " + ROJO + cuenta.getTitular().getNombre() + RESET);
+        System.out.println(VERDE + "-------------------------------------|" + RESET);
+        System.out.println("1-Ingresar dinero.                   " + VERDE + "|" + RESET);
+        System.out.println("2-Sacar dinero.                      " + VERDE + "|" + RESET);
+        System.out.println("3-Informacion cuenta.                " + VERDE + "|" + RESET);
+        System.out.println("4-Domiliciar recibo.                 " + VERDE + "|" + RESET);;
+        System.out.println("5-Listar recibos según periodicidad  " + VERDE + "|" + RESET);
+        System.out.println("0-Salir                              " + VERDE + "|" + RESET);
+        System.out.println(VERDE + "-------------------------------------|" + RESET);
         respuesta = sc.nextLine();
         return respuesta;
     }
@@ -102,11 +104,11 @@ public class Principal {
                 double cantidad = Double.parseDouble(sc.nextLine());
                 switch (cuenta.ingresar(cantidad)) {
                     case 1:
-                        System.out.println("Se ha ingresado: " + formatea.format(cantidad) + "€");
+                        System.out.println("Se ha ingresado: " + VERDE + formatea.format(cantidad) + RESET + "€");
                         System.out.println(MORADO + "AVISO: NOTIFICAR A HACIENDA" + RESET);
                         break;
                     case 0:
-                        System.out.println("Se ha ingresado: " + formatea.format(cantidad) + "€");
+                        System.out.println("Se ha ingresado: " + VERDE + formatea.format(cantidad) + RESET + "€");
                         break;
                     default:
                         System.out.println("Debes introducir una cantidad correcta");
@@ -136,10 +138,10 @@ public class Principal {
                 } else if (dinero == saldo) {
                     System.out.println(ROJO + "No hay suficiente dinero en la cuenta para sacar " + cantidad + RESET);
                 } else if (dinero < 0) {
-                    System.out.printf("Se ha retirado: %.2f€\n", cantidad);
+                    System.out.println("Se ha retirado: " + ROJO + formatea.format(cantidad) + RESET + "€");
                     System.out.println(ROJO + "“AVISO: SALDO NEGATIVO”" + RESET);
                 } else {
-                    System.out.printf("Se ha retirado: %.2f€\n", cantidad);
+                    System.out.println("Se ha retirado: " + ROJO + formatea.format(cantidad) + RESET + "€");
                 }
                 System.out.println("\n" + cuenta.getSaldoFormateado());
                 break;
@@ -190,10 +192,13 @@ public class Principal {
     public static void recibosPorPeriocidad(CuentaBancaria cuenta) {
         String periodicidad;
         System.out.println("¿Indica la periocidad de los recibos que quieres recibir información"
-                + " 'mensual, trimestral, anual.");
+                + " 'mensual, trimestral, anual'.");
         periodicidad = sc.nextLine();
         if (!cuenta.listadoRecibosDomiciliados(periodicidad).isEmpty()) {
-            System.out.println("Los recibos " + periodicidad + "es son:\n" + cuenta.listadoRecibosDomiciliados(periodicidad));
+            System.out.println("Los recibos " + ROJO + periodicidad + "es" + RESET + " son:\n");
+            for (Recibo listadoRecibosDomiciliado : cuenta.listadoRecibosDomiciliados(periodicidad)) {
+                System.out.println(listadoRecibosDomiciliado);
+            }
         } else if (cuenta.listadoRecibosDomiciliados(periodicidad).isEmpty()) {
             System.out.println("No tienes recibos con esa periodicidad");
         }
@@ -202,7 +207,7 @@ public class Principal {
     public static CuentaBancaria localizaCC(Banco cuenta) {
         do {
             try {
-                System.out.println("Indique el número de cuenta con el que deseas operar.\n");
+                System.out.println("Indique el número de cuenta:\n");
                 long numero = Long.parseLong(sc.nextLine());
                 CuentaBancaria numeroCuenta = cuenta.localicarCC(numero);
                 return numeroCuenta;

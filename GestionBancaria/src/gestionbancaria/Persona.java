@@ -1,6 +1,13 @@
 package gestionbancaria;
 
 public class Persona {
+
+    public static final String ROJO = "\u001B[31m";
+    public static final String VERDE = "\u001B[32m";
+    public static final String AZUL = "\u001B[34m";
+    public static final String RESET = "\u001B[0m";
+    public static final String MORADO = "\u001B[35m";
+    public static final String CYAN = "\u001B[36m";
 // Atributos
 
     private final String nif;
@@ -42,6 +49,6 @@ public class Persona {
 
     @Override  //REDEFINE EL MÉTODO
     public String toString() {
-        return nombre + " (" + nif + ")";
+        return ROJO + nombre + AZUL + " (" + ROJO + VERDE + nif + AZUL + ")" + RESET;
     }
 }
