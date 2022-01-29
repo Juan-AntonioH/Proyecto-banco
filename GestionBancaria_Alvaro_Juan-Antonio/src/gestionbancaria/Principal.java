@@ -89,7 +89,7 @@ public class Principal {
         System.out.println("1-Ingresar dinero.                   " + VERDE + "|" + RESET);
         System.out.println("2-Sacar dinero.                      " + VERDE + "|" + RESET);
         System.out.println("3-Informacion cuenta.                " + VERDE + "|" + RESET);
-        System.out.println("4-Domiliciar recibo.                 " + VERDE + "|" + RESET);;
+        System.out.println("4-Domiliciar recibo.                 " + VERDE + "|" + RESET);
         System.out.println("5-Listar recibos según periodicidad  " + VERDE + "|" + RESET);
         System.out.println("0-Salir                              " + VERDE + "|" + RESET);
         System.out.println(VERDE + "-------------------------------------|" + RESET);
@@ -221,6 +221,5 @@ public class Principal {
             }
         } while (true);
         return null;
-
     }
 }
