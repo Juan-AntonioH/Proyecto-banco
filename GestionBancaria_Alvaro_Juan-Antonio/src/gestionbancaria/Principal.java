@@ -91,7 +91,7 @@ public class Principal {
         System.out.println("3-Informacion cuenta.                " + VERDE + "|" + RESET);
         System.out.println("4-Domiliciar recibo.                 " + VERDE + "|" + RESET);
         System.out.println("5-Listar recibos según periodicidad  " + VERDE + "|" + RESET);
-        System.out.println("0-Salir                              " + VERDE + "|" + RESET);
+        System.out.println("0-Salir/Cambiar cuenta               " + VERDE + "|" + RESET);
         System.out.println(VERDE + "-------------------------------------|" + RESET);
         respuesta = sc.nextLine();
         return respuesta;
